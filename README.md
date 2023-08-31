@@ -10,3 +10,5 @@ The credit card dataset used for this project was provided by [Fraud Detection D
 
 I've learned how to develop a credit card fraud detection model using different machine learning options to tackle and predict credit card fraud.
 Different algorithms were used to plot models and curves of the dataset provided. I also analyzed and visualized the dataset to determine fraudulent credit card transactions. 
+
+Credit:DataFlair
