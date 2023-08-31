@@ -12,6 +12,8 @@ creditcard_data <- read.csv("C:/Users/Onlinevirus/Desktop/creditcard.csv")
 dim(creditcard_data)
 head(creditcard_data,6)
 tail(creditcard_data,6)
+####REVIEW DIMHEADFUNCTION.PNG####
+####REVIEW TAILFUNCTION.PNG####
 
 ### I will use table(), summary(), names(), and var() functions to display generic values of the dataset based on their variables and object 
 
@@ -19,10 +21,12 @@ table(creditcard_data$Class)
 summary(creditcard_data$Amount)
 names(creditcard_data)
 var(creditcard_data$Amount)
+####REVIEW TABSUMNAMVARFUNCTION.PNG####
 
-### To caluclate the standard deviation of the dataframe, the function sd() is used to measure the average amount of variability in the dataset
+### To calculate the standard deviation of the dataframe, the function sd() is used to measure the average amount of variability in the dataset
 
 sd(creditcard_data$Amount)
+####REVIEW SDHEADFUNCTION.PNG####
 
 ## Manipulating the Dataset
 ### The data used has an extreme value range that may interfere with the functioning of the projected model, the scale() function will be used to
@@ -32,6 +36,7 @@ head(creditcard_data)
 creditcard_data$Amount=scale(creditcard_data$Amount)
 NewData=creditcard_data[,-c(1)]
 head(NewData)
+####REVIEW CREDNEWHEADFUNCTION.PNG####
 
 ## Modeling the Dataset
 ### The dataset has been feature scaled from the previous functions used. The dataset will now be seperated into two attributes by a 80:20 ratio
@@ -46,6 +51,7 @@ train_data = subset(NewData,data_sample==TRUE)
 test_data = subset(NewData,data_sample==FALSE)
 dim(train_data)
 dim(test_data)
+####REVIEW DIMTRAINTESTFUNCTION.PNG####
 
 ## Plotting a Logistic Regression Model of the Dataset
 ### By plotting the Logistic Regression Model, the probability outcome of either two variables are graphed; whether the dataset predicts the variable
@@ -57,6 +63,11 @@ summary(Logistic_Model)
 ### The Logistic Regression Model has been summarized and now will be plotted through visual graphs.
 
 plot(Logistic_Model)
+####REVIEW LOGREGRESSMOD.PNG####
+####REVIEW RESVSFIT.PNG####
+####REVIEW RESIDUALS.PNG####
+####REVIEW SCALELOC.PNG####
+####REVIEW RESVSLEV.PNG####
 
 ### To view the performance of the Logistic Regression model, an ROC curve (Receiver operating Characteristics curce) will graph the performance of the
 ### model at all classification thresholds.
@@ -65,6 +76,7 @@ install.packages("pROC")
 library(pROC)
 lr.predict <- predict(Logistic_Model,test_data, probability = TRUE)
 auc.gbm = roc(test_data$Class, lr.predict, plot = TRUE, col = "blue")
+####REVIEW ROCCURVE.PNG####
 
 ## Modeling a Decision Tree Algorithm
 ### Using a Decision Tree to plot the outcomes of the model that can be used to predict the class or variable of the target; whether the target is 
@@ -78,6 +90,7 @@ decisionTree_model <- rpart(Class ~ . , creditcard_data, method = 'class')
 predicted_val <- predict(decisionTree_model, creditcard_data, type = 'class')
 probability <- predict(decisionTree_model, creditcard_data, type = 'prob')
 rpart.plot(decisionTree_model)
+####REVIEW DECISIONTREE.PNG####
 
 ## Using the ANN models to learn and determine patterns in the dataset
 ### ANN (Artificial Neural Network) is modeled after the human nervous system. Allows the algorithm to take historical datasets learned and apply
@@ -91,6 +104,7 @@ plot(ANN_model)
 predANN=compute(ANN_model,test_data)
 resultANN=predANN$net.result
 resultANN=ifelse(resultANN>0.5,1,0)
+####REVIEW ANN.PNG####
 
 ## Using Gradient Boosting to form a strong algorithm model
 ### Gradient Boosting (GBM) will be used to perform classification and regression tasks. This method will take the disision trees and combine them to
@@ -117,6 +131,8 @@ gbm.iter = gbm.perf(model_gbm, method = "test")
 
 model.influence = relative.influence(model_gbm, n.trees = gbm.iter, sort. = TRUE)
 plot(model_gbm)
+####REVIEW GBM.PNG####
+####REVIEW BERNOULLI.PNG####
 
 ### Bernoulli's deviance is graphed to show the "goodness-of-fit" for the statistical model compared to the amount of iterations the test data is 
 ### processed.
@@ -127,6 +143,7 @@ plot(model_gbm)
 
 gbm_test = predict(model_gbm, newdata = test_data, n.trees = gbm.iter)
 gbm_auc = roc(test_data$Class, gbm_test, plot = TRUE, col = "red")
+####REVIEW AUC.PNG####
 
 print(gbm_auc)
 
